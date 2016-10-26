@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: './dist/menu.js',
+    entry: ['./dist/menu.js'],
     output: { path: __dirname, filename: './public/js/bundle.js'},
 
     module : {

@@ -7,26 +7,26 @@ class Menu extends React.Component {
         super(props);
 
         this.state = {
-            items: []
+            items: [],
+            head:{}
         };
     }
 
     componentDidMount() {
         axios.get(`http://193.124.178.232:100/wbp/menu`)
             .then(res => {
-                const items = res.data.data.map(obj => obj.data);
-                this.setState({ items });
-        });
+                const items = res.data;
+                this.setState({ items: items.data, head: items });
+            })
     }
 
     render() {
-        console.log(this.state.items)
         return (
-            <div>
-                <ul>
-                    {this.state.items.map(item => <li key={item.fio}>{item.mail}</li>)}
-                </ul>
-            </div>
+        <ul id="slide-out" className="side-nav">
+            {this.state.items.map(item => <li key={item.id}><a href={item.apiurl}>{item.ptitle}</a></li>)}
+            <li><a href="#!">First Sidebar Link</a></li>
+            <li><a href="#!">Second Sidebar Link</a></li>
+        </ul>
         );
     }
 }
