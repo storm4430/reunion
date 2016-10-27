@@ -91,8 +91,8 @@
 	    }
 
 	    _createClass(Menu, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
+	        key: 'getData',
+	        value: function getData() {
 	            var _this2 = this;
 
 	            _axios2.default.get('http://193.124.178.232:100/wbp/menu').then(function (res) {
@@ -101,40 +101,249 @@
 	            });
 	        }
 	    }, {
+	        key: 'hasChild',
+	        value: function hasChild(id) {
+	            if (this.state.items.filter(function (t) {
+	                return t.parentid === id;
+	            }).length > 0) {
+	                return true;
+	            } else {
+	                return false;
+	            }
+	        }
+	    }, {
+	        key: 'createtreenode',
+	        value: function createtreenode(obj) {
+	            if (
+	            // console.log(obj.id, ' - ',this.hasChild(obj.id));
+	            this.hasChild(obj.id) === true) return _react2.default.createElement(
+	                'ul',
+	                { key: obj.id, id: 'ulcollapsible', className: 'collapsible collapsible-accordion' },
+	                _react2.default.createElement(
+	                    'li',
+	                    null,
+	                    _react2.default.createElement(
+	                        'a',
+	                        { className: 'collapsible-header waves-effect waves-teal active' },
+	                        _react2.default.createElement(
+	                            'i',
+	                            { className: 'material-icons' },
+	                            obj.icon
+	                        ),
+	                        obj.id,
+	                        ' ',
+	                        obj.ptitle,
+	                        ' ',
+	                        obj.parentid
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'collapsible-body' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'carousel.html' },
+	                                    'Carousel'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'collapsible.html' },
+	                                    'Collapsible'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'dialogs.html' },
+	                                    'Dialogs'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'dropdown.html' },
+	                                    'Dropdown'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'media.html' },
+	                                    'Media'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'modals.html' },
+	                                    'Modals'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'parallax.html' },
+	                                    'Parallax'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'pushpin.html' },
+	                                    'Pushpin'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'scrollfire.html' },
+	                                    'ScrollFire'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'scrollspy.html' },
+	                                    'Scrollspy'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'active' },
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'side-nav.html' },
+	                                    'SideNav'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'tabs.html' },
+	                                    'Tabs'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'transitions.html' },
+	                                    'Transitions'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'a',
+	                                    { href: 'waves.html' },
+	                                    'Waves'
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );else {
+	                return '';
+	            }
+	        }
+	    }, {
+	        key: 'preparetree',
+	        value: function preparetree() {
+	            var _this3 = this;
+
+	            return this.state.items.sort(function (obj1, obj2) {
+	                return obj1.id - obj2.id;
+	            }).map(function (item) {
+	                return _this3.createtreenode(item);
+	            });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            this.getData();
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            $('.collapsible').collapsible();
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'ul',
 	                { id: 'slide-out', className: 'side-nav' },
-	                this.state.items.map(function (item) {
-	                    return _react2.default.createElement(
-	                        'li',
-	                        { key: item.id },
+	                _react2.default.createElement(
+	                    'li',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'userView' },
+	                        _react2.default.createElement('img', { className: 'background', src: this.state.head.background }),
 	                        _react2.default.createElement(
 	                            'a',
-	                            { href: item.apiurl },
-	                            item.ptitle
+	                            { href: '#!user' },
+	                            _react2.default.createElement('img', { className: 'circle', src: this.state.head.image })
+	                        ),
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#!name' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'white-text name' },
+	                                this.state.head.fio
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#!email' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'white-text email' },
+	                                this.state.head.mail
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'a',
+	                            { href: '#!orgname' },
+	                            _react2.default.createElement(
+	                                'span',
+	                                { className: 'white-text name' },
+	                                this.state.head.orgname
+	                            )
 	                        )
-	                    );
-	                }),
-	                _react2.default.createElement(
-	                    'li',
-	                    null,
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '#!' },
-	                        'First Sidebar Link'
 	                    )
 	                ),
-	                _react2.default.createElement(
-	                    'li',
-	                    null,
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '#!' },
-	                        'Second Sidebar Link'
-	                    )
-	                )
+	                this.preparetree()
 	            );
 	        }
 	    }]);
@@ -143,6 +352,7 @@
 	}(_react2.default.Component);
 
 	_reactDom2.default.render(_react2.default.createElement(Menu, null), document.getElementById('mmenu'));
+	$("#button-collapse").sideNav();
 
 /***/ },
 /* 2 */

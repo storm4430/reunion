@@ -1,8 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Russo+One');
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    /*background: url("http://www.fonstola.ru/pic/201111/1920x1200/fonstola.ru-50518.jpg") no-repeat center bottom fixed;*/
+    /*background-size: cover;*/
+    /*padding: 50px;*/
+    font: 14px 'Russo One', sans-serif;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+
+.nav-wrapper{
+    margin-right: 25px;
+    margin-left: 25px;
+}
+
+.container{
+    margin-top:10px !important;
+    flex: 1 0 auto;
+    max-width: none !important;
+    width: 90% !important;
+}
+
+.doc{
+    cursor: pointer;
+}
+
+#pl{
+    min-height:4px;
+}
+
+.np{
+    margin-left:30px;
+}
+
+strong{
+    font-weight: bold !important;
+}
+
+.cnt{
+    float: left !important;
+}
+
+.p-up{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.material-icons:hover{
+    color: green;
+}
+
+.side-nav .userView .circle{
+    height: 100px !important;
+    width: 100px !important;
 }
