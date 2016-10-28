@@ -128,7 +128,7 @@ export default class Menu extends React.Component {
 
 ReactDOM.render(
     <Menu />,
-    document.getElementById('container')
+    document.getElementById('mmenu')
 );
 $("#button-collapse").sideNav();
 
