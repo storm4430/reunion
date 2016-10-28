@@ -58,3 +58,7 @@ strong{
     height: 100px !important;
     width: 100px !important;
 }
+
+.padding-mid{
+    padding: 0 16px !important;
+}

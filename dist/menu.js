@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import MenuEdit from './containers/menuedit';
+import Index from './containers/index';
 
-class Menu extends React.Component {
+export default class Menu extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             items: [],
-            head:{}
+            head:{},
+            route: window.location.hash.substr(1)
         };
     }
 
@@ -18,50 +22,55 @@ class Menu extends React.Component {
                 const items = res.data;
                 this.setState({ items: items.data, head: items });
             })
+            .catch(error => {
+                Materialize.toast(error.message, 3000, 'rounded red')
+            });
     }
 
     hasChild(id) {
-        if (this.state.items.filter((t) => {return t.parentid === id}).length > 0)
-        {
-            return true
-        }
-        else{
-            return false;
-        }
+        return (this.state.items.filter((t) => {return t.parentid === id}).length > 0)?
+            true:
+                false;
+    }
 
+    hasParent(id) {
+        return (this.state.items.filter((t) => {return t.id === id}).length > 0)?
+            true:
+                false;
+    }
+
+    getnodeChild(id)  {
+        return this.state.items.filter((t) => {return t.parentid === id}).map(
+         (i => (
+                    <li key={i.id}><a href={i.apiurl}><i className="material-icons">{i.icon}</i>{i.ptitle}</a></li>
+                 )
+            )
+        )
     }
 
     createtreenode(obj) {
-        // console.log(obj.id, ' - ',this.hasChild(obj.id));
         if (this.hasChild(obj.id) === true)
             return (
-                <ul key={obj.id} id="ulcollapsible" className="collapsible collapsible-accordion">
-                    <li>
-                        <a className="collapsible-header waves-effect waves-teal active"><i className="material-icons">{obj.icon}</i>{obj.id} {obj.ptitle} {obj.parentid}</a>
-                        <div className="collapsible-body" >
-                            {/*style="display: block;"*/}
-                            <ul>
-                                <li><a href="carousel.html">Carousel</a></li>
-                                <li><a href="collapsible.html">Collapsible</a></li>
-                                <li><a href="dialogs.html">Dialogs</a></li>
-                                <li><a href="dropdown.html">Dropdown</a></li>
-                                <li><a href="media.html">Media</a></li>
-                                <li><a href="modals.html">Modals</a></li>
-                                <li><a href="parallax.html">Parallax</a></li>
-                                <li><a href="pushpin.html">Pushpin</a></li>
-                                <li><a href="scrollfire.html">ScrollFire</a></li>
-                                <li><a href="scrollspy.html">Scrollspy</a></li>
-                                <li className="active"><a href="side-nav.html">SideNav</a></li>
-                                <li><a href="tabs.html">Tabs</a></li>
-                                <li><a href="transitions.html">Transitions</a></li>
-                                <li><a href="waves.html">Waves</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
+                <li key={obj.id} className="no-padding">
+                    <ul className="collapsible collapsible-accordion">
+                        <li>
+                            <a className="collapsible-header waves-effect waves-green active"><i className="material-icons">{obj.icon}</i>{obj.ptitle}</a>
+                            <div className="collapsible-body" >
+                                {/*style="display: block;"*/}
+                                <ul>
+                                    {this.getnodeChild(obj.id)}
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
             )
         else {
-            return ''
+            if (this.hasChild(obj.id) === false && this.hasParent(obj.parentid) === false) {
+                return (
+                    <li key={obj.id} ><a href={obj.apiurl} className="padding-mid"><i className="material-icons">{obj.icon}</i>{obj.ptitle}</a></li>
+                )
+            }
         }
     }
 
@@ -76,13 +85,30 @@ class Menu extends React.Component {
 
     componentDidMount() {
         this.getData();
+        // window.addEventListener('hashchange', () => {
+        //     this.setState({
+        //         route: window.location.hash.substr(1)
+        //     })
+        // })
+
     }
 
     componentDidUpdate() {
-        $('.collapsible').collapsible();
+        $(".collapsible-header").removeClass(function(){
+            return "active";
+        });
+        $(".collapsible").collapsible({accordion: true});
+        $(".collapsible").collapsible({accordion: false});
     }
 
     render() {
+        // let Child
+        // switch (this.state.route) {
+        //     case '/MenuEdit': Child = MenuEdit; break;
+        //     // case '/genre': Child = Genre; break;
+        //     default: Child = Index;
+        // }
+
         return (
             <ul id="slide-out" className="side-nav">
                 <li>
@@ -102,7 +128,7 @@ class Menu extends React.Component {
 
 ReactDOM.render(
     <Menu />,
-    document.getElementById('mmenu')
+    document.getElementById('container')
 );
 $("#button-collapse").sideNav();
 
