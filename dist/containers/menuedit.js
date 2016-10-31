@@ -24,9 +24,11 @@ export default class MenuEdit extends React.Component{
                 <div className="collapsible-header">
                     <div className="row center">
                         <div className="col s2">{o.id}</div>
-                        <div className="col s4">{o.apiurl}</div>
+                        <div className="col s2">{o.ptitle}</div>
+                        <div className="col s1">{o.parentid}</div>
+                        <div className="col s3">{o.apiurl}</div>
                         <div className="col s1">{o.orderby}</div>
-                        <div className="col s3">{o.rolenames}</div>
+                        <div className="col s2">{o.rolenames}</div>
                         <div className="col s1">{o.icon}</div>
                     </div>
                 </div>
@@ -44,7 +46,7 @@ export default class MenuEdit extends React.Component{
                             <div class="indeterminate red">
                             </div>
                        </div>`);
-        axios.get(`http://193.124.178.232:100/wbp/menusel`)
+        axios.get(`http://193.124.178.232:100/wbp/menusel2`)
             .then(res => {
                 const data = res.data;
                 this.setState({ data });
@@ -78,10 +80,13 @@ export default class MenuEdit extends React.Component{
                     <li>
                         <div className="indigo darken-3 white-text  p-up">
                             <div className="row">
-                                <div className="col s2 center">Автор</div>
-                                <div className="col s3 center">Тип документа</div>
-                                <div className="col s5 center">Кратко</div>
-                                <div className="col s2">Операции</div>
+                                <div className="col s2 center">id</div>
+                                <div className="col s2 center">Наименование</div>
+                                <div className="col s1 center">Родитель</div>
+                                <div className="col s3 center">Сcылка</div>
+                                <div className="col s1 center">Порядок</div>
+                                <div className="col s2 center">Роли</div>
+                                <div className="col s1 center">Иконка!</div>
                             </div>
                         </div>
                     </li>
