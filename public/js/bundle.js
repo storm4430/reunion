@@ -26630,10 +26630,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(2);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
 	var _axios = __webpack_require__(229);
 
 	var _axios2 = _interopRequireDefault(_axios);
@@ -26778,7 +26774,7 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            this.getData();
-	            $("#button-collapse").sideNav().hide();
+	            $("#button-collapse").sideNav();
 	        }
 	    }, {
 	        key: 'componentDidUpdate',
@@ -26856,12 +26852,6 @@
 
 	    return Menu;
 	}(_react2.default.Component);
-
-	// ReactDOM.render(
-	//     <Menu />,
-	//     document.getElementById('mmenu')
-	// );
-
 
 	exports.default = Menu;
 
@@ -28299,6 +28289,12 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _axios = __webpack_require__(229);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _reactRouter = __webpack_require__(173);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28307,18 +28303,99 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var MenuEdit = function (_Component) {
-	    _inherits(MenuEdit, _Component);
+	var MenuEdit = function (_React$Component) {
+	    _inherits(MenuEdit, _React$Component);
 
 	    function MenuEdit() {
 	        _classCallCheck(this, MenuEdit);
 
-	        return _possibleConstructorReturn(this, (MenuEdit.__proto__ || Object.getPrototypeOf(MenuEdit)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (MenuEdit.__proto__ || Object.getPrototypeOf(MenuEdit)).call(this));
+
+	        _this.state = {
+	            data: []
+	        };
+	        return _this;
 	    }
 
 	    _createClass(MenuEdit, [{
+	        key: 'getMenuItems',
+	        value: function getMenuItems() {
+	            return _react2.default.createElement(
+	                'ul',
+	                { className: 'collapsible popout commentList', 'data-collapsible': 'accordion' },
+	                this.getMenuDetails()
+	            );
+	        }
+	    }, {
+	        key: 'getMenuDetails',
+	        value: function getMenuDetails() {
+	            return this.state.data.map(function (o) {
+	                return _react2.default.createElement(
+	                    'li',
+	                    { key: o.id },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'collapsible-header' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row center' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col s2' },
+	                                o.id
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col s4' },
+	                                o.apiurl
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col s1' },
+	                                o.orderby
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col s3' },
+	                                o.rolenames
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col s1' },
+	                                o.icon
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'collapsible-body deep-orange lighten-3' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            o.rolenames
+	                        )
+	                    )
+	                );
+	            });
+	        }
+	    }, {
+	        key: 'loadDocsFromServer',
+	        value: function loadDocsFromServer() {
+	            var _this2 = this;
+
+	            $('#pl').html('<div class="progress green">\n                            <div class="indeterminate red">\n                            </div>\n                       </div>');
+	            _axios2.default.get('http://193.124.178.232:100/wbp/menusel').then(function (res) {
+	                var data = res.data;
+	                _this2.setState({ data: data });
+	                $('#pl').empty();
+	            }).catch(function (error) {
+	                Materialize.toast(error.message, 3000, 'rounded red');
+	            });
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
+	            this.loadDocsFromServer();
 	            $('.button-collapse').sideNav('hide');
 	        }
 	    }, {
@@ -28326,20 +28403,80 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'row' },
+	                { className: 'TestBox' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-md-12' },
-	                    '\u0420\u0430\u0437\u0434\u0435\u043B sdfv/\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043C\u0435\u043D\u044E'
-	                )
+	                    'nav',
+	                    { className: 'indigo darken-3 z-depth-1' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'nav-wrapper' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col s7' },
+	                                _react2.default.createElement(
+	                                    _reactRouter.Link,
+	                                    { className: 'breadcrumb navigate', to: '/' },
+	                                    ' \u0413\u043B\u0430\u0432\u043D\u0430\u044F'
+	                                ),
+	                                _react2.default.createElement(
+	                                    _reactRouter.Link,
+	                                    { className: 'breadcrumb navigate', to: '/menuedit' },
+	                                    ' \u0418\u0441\u0442\u043E\u0440\u0438\u044F \u043E\u043F\u0435\u0440\u0430\u0446\u0438\u0439'
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement('div', { id: 'pl' }),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { className: 'collapsible popout' },
+	                    _react2.default.createElement(
+	                        'li',
+	                        null,
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'indigo darken-3 white-text  p-up' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col s2 center' },
+	                                    '\u0410\u0432\u0442\u043E\u0440'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col s3 center' },
+	                                    '\u0422\u0438\u043F \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col s5 center' },
+	                                    '\u041A\u0440\u0430\u0442\u043A\u043E'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col s2' },
+	                                    '\u041E\u043F\u0435\u0440\u0430\u0446\u0438\u0438'
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                this.getMenuItems()
 	            );
 	        }
 	    }]);
 
 	    return MenuEdit;
-	}(_react.Component);
+	}(_react2.default.Component);
 
 	exports.default = MenuEdit;
+	;
 
 /***/ }
 /******/ ]);

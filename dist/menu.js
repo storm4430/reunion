@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router';
 
@@ -117,11 +116,6 @@ export default class Menu extends React.Component {
         );
     }
 }
-
-// ReactDOM.render(
-//     <Menu />,
-//     document.getElementById('mmenu')
-// );
 
 
 
