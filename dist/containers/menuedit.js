@@ -10,11 +10,59 @@ export default class MenuEdit extends React.Component{
         };
     }
 
+    ptitleChange(){
+        alert();
+    }
+
     getMenuItems() {
         return (
             <ul className="collapsible popout commentList" data-collapsible="accordion">
                 {this.getMenuDetails()}
             </ul>
+        )
+    }
+
+    getEditForm(obj){
+        return(
+            <div className="row incollapse">
+                <form className="col s12">
+                    <div className="row">
+                        <div className="input-field col s4">
+                            <input placeholder="Наименование"
+                                   onChange={()=> this.ptitleChange()}
+                                   type="text"
+                                   defaultValue={obj.ptitle}
+                                   autoFocus="autoFocus"/>
+                            <label className="active">Наименование</label>
+                        </div>
+                        <div className="input-field col s4">
+                            <input placeholder="Путь" type="text" defaultValue={obj.apiurl}/>
+                            <label className="active">Путь</label>
+                        </div>
+                        <div className="input-field col s4">
+                            <input placeholder="Родительский элемент" type="text" defaultValue={obj.parentid}/>
+                            <label htmlFor="apiurl" className="active">Родительский элемент</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s2">
+                            <input placeholder="Порядок" type="text" defaultValue={obj.orderby} autoFocus="autoFocus"/>
+                            <label className="active">Порядок</label>
+                        </div>
+                        <div className="input-field col s4">
+                            <input placeholder="Роли" type="text" defaultValue={obj.rolenames}/>
+                            <label className="active">Роли</label>
+                        </div>
+                        <div className="input-field col s4">
+                            <input placeholder="Иконка" type="text" defaultValue={obj.icon}/>
+                            <label className="active">Иконка</label>
+                        </div>
+                        <div className="input-field col s2">
+                            <a className="waves-effect waves-light btn"><i className="material-icons left">done</i>СОХРАНИТЬ</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         )
     }
 
@@ -29,13 +77,11 @@ export default class MenuEdit extends React.Component{
                         <div className="col s3">{o.apiurl}</div>
                         <div className="col s1">{o.orderby}</div>
                         <div className="col s2">{o.rolenames}</div>
-                        <div className="col s1">{o.icon}</div>
+                        <div className="col s1 center" ><i className="material-icons">{o.icon}</i></div>
                     </div>
                 </div>
-                <div className="collapsible-body deep-orange lighten-3">
-                    <p>
-                        {o.rolenames}
-                    </p>
+                <div className="collapsible-body">
+                    {this.getEditForm(o)}
                 </div>
             </li>
         )
@@ -46,7 +92,7 @@ export default class MenuEdit extends React.Component{
                             <div class="indeterminate red">
                             </div>
                        </div>`);
-        axios.get(`http://193.124.178.232:100/wbp/menusel2`)
+        axios.get(`http://193.124.178.232:100/wbp/menusel`)
             .then(res => {
                 const data = res.data;
                 this.setState({ data });
@@ -70,7 +116,7 @@ export default class MenuEdit extends React.Component{
                         <div className="row">
                             <div className="col s7">
                                 <Link className="breadcrumb navigate" to="/"> Главная</Link>
-                                <Link className="breadcrumb navigate" to="/menuedit"> История операций</Link>
+                                <Link className="breadcrumb navigate" to="/menuedit"> Настройка меню</Link>
                             </div>
                         </div>
                     </div>
@@ -86,7 +132,7 @@ export default class MenuEdit extends React.Component{
                                 <div className="col s3 center">Сcылка</div>
                                 <div className="col s1 center">Порядок</div>
                                 <div className="col s2 center">Роли</div>
-                                <div className="col s1 center">Иконка!</div>
+                                <div className="col s1">Иконка!</div>
                             </div>
                         </div>
                     </li>

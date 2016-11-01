@@ -50,9 +50,9 @@ strong{
     margin-bottom: 20px;
 }
 
-.material-icons:hover{
-    color: green;
-}
+/*.material-icons:hover{*/
+    /*color: green;*/
+/*}*/
 
 .side-nav .userView .circle{
     height: 100px !important;
@@ -61,4 +61,9 @@ strong{
 
 .padding-mid{
     padding: 0 16px !important;
+}
+
+.incollapse{
+    margin-left: 30px !important;
+    margin-right: 30px !important;
 }
