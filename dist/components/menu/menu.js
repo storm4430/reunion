@@ -24,15 +24,11 @@ export default class Menu extends React.Component {
     }
 
     hasChild(id) {
-        return (this.state.items.filter((t) => {return t.parentid === id}).length > 0)?
-            true:
-                false;
+        return (this.state.items.filter((t) => {return t.parentid === id}).length > 0)
     }
 
     hasParent(id) {
-        return (this.state.items.filter((t) => {return t.id === id}).length > 0)?
-            true:
-                false;
+        return (this.state.items.filter((t) => {return t.id === id}).length > 0)
     }
 
     getnodeChild(id)  {
