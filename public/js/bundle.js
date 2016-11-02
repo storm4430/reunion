@@ -28465,7 +28465,7 @@
 	                ),
 	                _react2.default.createElement(
 	                    'div',
-	                    { id: 'modal1', className: 'modal modal-fixed-footer' },
+	                    { id: 'modal1', className: 'modal' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'modal-content' },

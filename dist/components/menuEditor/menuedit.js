@@ -87,7 +87,7 @@ export default class MenuEdit extends React.Component{
                         <i className="material-icons">playlist_add</i>
                     </a>
                 </div>
-                <div id="modal1" className="modal modal-fixed-footer">
+                <div id="modal1" className="modal">
                     <div className="modal-content">
                         <NewMenuItem />
                     </div>

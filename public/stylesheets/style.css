@@ -69,6 +69,6 @@ strong{
 }
 
 .fixed-action-btn{
-    bottom: 275px !important;
+    bottom: 50% !important;
     right: 24px;
 }
