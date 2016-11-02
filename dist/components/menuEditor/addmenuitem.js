@@ -2,26 +2,20 @@ import React from 'react';
 import update from 'react-addons-update';
 import axios from 'axios'
 
-export default class MenuItem extends React.Component{
-    constructor(props) {
+export default class NewMenuItem extends React.Component{
+    constructor() {
         super();
         this.state = {
-            item: props.item
+            item: {}
         };
         this.iconChange = this.iconChange.bind(this);
         this.ptitleChange = this.ptitleChange.bind(this);
         this.saveItem = this.saveItem.bind(this);
     }
 
-    getMenuItems() {
-        return (
-                this.getMenuDetails()
-        )
-    }
-
     saveItem(e){
         let data = JSON.stringify(this.state.item);
-        axios.put('http://193.124.178.232:100/wbp/menu?id=' + this.state.item.id, data)
+        axios.post('http://193.124.178.232:100/wbp/menu', data)
             .then(function (response) {
                 console.log(response);
             })
@@ -42,6 +36,10 @@ export default class MenuItem extends React.Component{
         });
     }
 
+    componentDidMount(){
+        $('select').material_select();
+    }
+
     getEditForm(){
         return(
             <div className="row incollapse">
@@ -49,28 +47,33 @@ export default class MenuItem extends React.Component{
                     <div className="row">
                         <div className="input-field col s4">
                             <input placeholder="Наименование"
-                                   onChange={this.ptitleChange}
                                    type="text"
-                                   defaultValue={this.state.item.ptitle}
-                                   autoFocus="autoFocus"/>
-                            <label className="active">Наименование</label>
+                                   autoFocus="autoFocus"
+                                   value={this.state.item.ptitle}/>
+                            <label>Наименование</label>
                         </div>
                         <div className="input-field col s4">
-                            <input placeholder="Путь" type="text" defaultValue={this.state.item.apiurl}/>
+                            <input placeholder="Путь" type="text" />
                             <label className="active">Путь</label>
                         </div>
                         <div className="input-field col s4">
-                            <input type="text" defaultValue={this.state.item.parentid}/>
-                            <label htmlFor="apiurl" className="active">Родительский элемент</label>
+                            <input placeholder="Родительский элемент" type="number" />
+                            <label className="active">Родительский элемент</label>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s2">
-                            <input placeholder="Порядок" type="text" defaultValue={this.state.item.orderby} autoFocus="autoFocus"/>
+                            <input placeholder="Порядок" type="number"  autoFocus="autoFocus"/>
                             <label className="active">Порядок</label>
                         </div>
                         <div className="input-field col s4">
-                            <input placeholder="Роли" type="text" defaultValue={this.state.item.rolenames}/>
+                            <select multiple defaultValue="[-1]" id="hhh">
+                                <option value="-1" disabled selected>Роли</option>
+                                <option value="1">Разработка</option>
+                                <option value="2">Сотрудник</option>
+                                <option value="3">Option 3</option>
+                            </select>
+
                             <label className="active">Роли</label>
                         </div>
                         <div className="input-field col s3">
@@ -94,30 +97,15 @@ export default class MenuItem extends React.Component{
         )
     }
 
-    getMenuDetails() {
-        return (
-            <li key={this.state.item.id}>
-                <div className="collapsible-header">
-                    <div className="row center">
-                        <div className="col s2">{this.state.item.id}</div>
-                        <div className="col s2">{this.state.item.ptitle}</div>
-                        <div className="col s1">{this.state.item.parentid}</div>
-                        <div className="col s3">{this.state.item.apiurl}</div>
-                        <div className="col s1">{this.state.item.orderby}</div>
-                        <div className="col s2">{this.state.item.rolenames}</div>
-                        <div className="col s1 center" ><i className="material-icons">{this.state.item.icon}</i></div>
-                    </div>
-                </div>
-                <div className="collapsible-body">
-                    {this.getEditForm()}
-                </div>
-            </li>
-        )
-    }
+    // getMenuDetails() {
+    //     return (
+    //         this.getEditForm()
+    //     )
+    // }
 
     render() {
         return(
-                this.getMenuItems()
+                this.getEditForm()
         )
     }
 }

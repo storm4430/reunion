@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router';
 
 import MenuItem from './menuitem';
+import NewMenuItem from './addmenuitem';
 
 export default class MenuEdit extends React.Component{
     constructor() {
@@ -10,7 +11,12 @@ export default class MenuEdit extends React.Component{
         this.state = {
             data: []
         };
+        // this.addNewMenuItem = this.addNewMenuItem.bind(this);
     }
+
+    // addNewMenuItem(){
+    //     alert('Adding a new item')
+    // }
 
     loadDocsFromServer() {
         $('#pl').html(`<div class="progress green">
@@ -39,10 +45,12 @@ export default class MenuEdit extends React.Component{
     componentDidMount() {
         this.loadDocsFromServer();
         $('.button-collapse').sideNav('hide');
+        $('.modal').modal();
     }
 
     render() {
         return (
+
             <div className="TestBox">
                 <nav className="indigo darken-3 z-depth-1">
                     <div className="nav-wrapper">
@@ -73,7 +81,22 @@ export default class MenuEdit extends React.Component{
                 <ul className="collapsible popout commentList" data-collapsible="accordion">
                     {this.fillMenu()}
                 </ul>
+                <div className="fixed-action-btn">
+                    <a className="btn-floating btn-large red waves-effect modal-trigger"
+                        href="#modal1">
+                        <i className="material-icons">playlist_add</i>
+                    </a>
+                </div>
+                <div id="modal1" className="modal modal-fixed-footer">
+                    <div className="modal-content">
+                        <NewMenuItem />
+                    </div>
+                    <div className="modal-footer">
+                        <a href="#menuedit" className="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                    </div>
+                </div>
             </div>
+
         );
     }
 };
