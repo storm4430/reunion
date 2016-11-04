@@ -87,12 +87,12 @@ export default class MenuEdit extends React.Component{
                         <i className="material-icons">playlist_add</i>
                     </a>
                 </div>
-                <div id="modal1" className="modal">
+                <div id="modal1" className="modal bottom-sheet">
                     <div className="modal-content">
                         <NewMenuItem />
                     </div>
                     <div className="modal-footer">
-                        <a href="#menuedit" className="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                        <a href="#menuedit" className="modal-action modal-close waves-effect waves-green btn-flat">Закрыть</a>
                     </div>
                 </div>
             </div>

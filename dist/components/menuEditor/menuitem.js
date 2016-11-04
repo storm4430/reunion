@@ -8,8 +8,7 @@ export default class MenuItem extends React.Component{
         this.state = {
             item: props.item
         };
-        this.iconChange = this.iconChange.bind(this);
-        this.ptitleChange = this.ptitleChange.bind(this);
+        this.itempropChange = this.itempropChange.bind(this);
         this.saveItem = this.saveItem.bind(this);
     }
 
@@ -20,26 +19,23 @@ export default class MenuItem extends React.Component{
     }
 
     saveItem(e){
-        let data = JSON.stringify(this.state.item);
-        axios.put('http://193.124.178.232:100/wbp/menu?id=' + this.state.item.id, data)
+        console.log(JSON.stringify(this.state.item))
+        axios.put('http://193.124.178.232:100/wbp/menu?id=' + this.state.item.id, this.state.item)
             .then(function (response) {
-                console.log(response);
+                Materialize.toast('Ok!', 3000, 'rounded green')
             })
             .catch(function (error) {
                 Materialize.toast(error.hint, 3000, 'rounded red')
             });
     }
 
-    iconChange(event){
+    //Menu item changing event
+    itempropChange(event){
+        let t = event.currentTarget.dataset.mode;
         this.setState({
-            item: update(this.state.item, {icon: {$set: event.target.value}})
+            item: update(this.state.item, {[`${t}`]: {$set: event.target.value}})
         });
-    }
-
-    ptitleChange(event){
-        this.setState({
-            item: update(this.state.item, {ptitle: {$set: event.target.value}})
-        });
+        console.log(this.state.item)
     }
 
     getEditForm(){
@@ -49,33 +45,52 @@ export default class MenuItem extends React.Component{
                     <div className="row">
                         <div className="input-field col s4">
                             <input placeholder="Наименование"
-                                   onChange={this.ptitleChange}
+                                   onChange={this.itempropChange}
                                    type="text"
+                                   data-mode="ptitle"
                                    defaultValue={this.state.item.ptitle}
                                    autoFocus="autoFocus"/>
                             <label className="active">Наименование</label>
                         </div>
                         <div className="input-field col s4">
-                            <input placeholder="Путь" type="text" defaultValue={this.state.item.apiurl}/>
+                            <input placeholder="Путь"
+                                   onChange={this.itempropChange}
+                                   data-mode="apiurl"
+                                   type="text"
+                                   defaultValue={this.state.item.apiurl}/>
                             <label className="active">Путь</label>
                         </div>
                         <div className="input-field col s4">
-                            <input type="text" defaultValue={this.state.item.parentid}/>
-                            <label htmlFor="apiurl" className="active">Родительский элемент</label>
+                            <input type="number"
+                                   onChange={this.itempropChange}
+                                   data-mode="parentid"
+                                   placeholder="Родительский элемент"
+                                   defaultValue={this.state.item.parentid}/>
+                            <label className="active">Родительский элемент</label>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s2">
-                            <input placeholder="Порядок" type="text" defaultValue={this.state.item.orderby} autoFocus="autoFocus"/>
+                            <input placeholder="Порядок"
+                                   type="text"
+                                   onChange={this.itempropChange}
+                                   data-mode="orderby"
+                                   defaultValue={this.state.item.orderby}
+                                   autoFocus="autoFocus"/>
                             <label className="active">Порядок</label>
                         </div>
                         <div className="input-field col s4">
-                            <input placeholder="Роли" type="text" defaultValue={this.state.item.rolenames}/>
+                            <input placeholder="Роли"
+                                   onChange={this.itempropChange}
+                                   data-mode="rolenames"
+                                   type="text"
+                                   defaultValue={this.state.item.rolenames}/>
                             <label className="active">Роли</label>
                         </div>
                         <div className="input-field col s3">
                             <input placeholder="Иконка"
-                                   onChange={this.iconChange}
+                                   onChange={this.itempropChange}
+                                   data-mode="icon"
                                    type="text"
                                    defaultValue={this.state.item.icon}/>
                             <label className="active">Иконка</label>

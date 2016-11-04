@@ -14,8 +14,8 @@ export default class NewMenuItem extends React.Component{
     }
 
     saveItem(e){
-        let data = JSON.stringify(this.state.item);
-        axios.post('http://193.124.178.232:100/wbp/menu', data)
+        // let data = JSON.stringify(this.state.item);
+        axios.post('http://193.124.178.232:100/wbp/menu', this.state.item)
             .then(function (response) {
                 console.log(response);
             })
@@ -31,8 +31,9 @@ export default class NewMenuItem extends React.Component{
     }
 
     ptitleChange(event){
+        let t = event.currentTarget.dataset.mode;
         this.setState({
-            item: update(this.state.item, {ptitle: {$set: event.target.value}})
+            item: update(this.state.item, {t: {$set: event.target.value}})
         });
     }
 
@@ -48,6 +49,7 @@ export default class NewMenuItem extends React.Component{
                         <div className="input-field col s4">
                             <input placeholder="Наименование"
                                    type="text"
+                                   data-mode="ptitle"
                                    autoFocus="autoFocus"
                                    value={this.state.item.ptitle}/>
                             <label>Наименование</label>
@@ -67,8 +69,8 @@ export default class NewMenuItem extends React.Component{
                             <label className="active">Порядок</label>
                         </div>
                         <div className="input-field col s4">
-                            <select multiple defaultValue="[-1]" id="hhh">
-                                <option value="-1" disabled selected>Роли</option>
+                            <select multiple defaultValue={this.state.item.roles}>
+                                <option defaultValue="[-1]" disabled >Роли</option>
                                 <option value="1">Разработка</option>
                                 <option value="2">Сотрудник</option>
                                 <option value="3">Option 3</option>
