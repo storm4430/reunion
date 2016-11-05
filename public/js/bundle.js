@@ -28925,6 +28925,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -28942,8 +28944,7 @@
 	        _this.state = {
 	            item: {}
 	        };
-	        _this.iconChange = _this.iconChange.bind(_this);
-	        _this.ptitleChange = _this.ptitleChange.bind(_this);
+	        _this.itemPropChange = _this.itemPropChange.bind(_this);
 	        _this.saveItem = _this.saveItem.bind(_this);
 	        return _this;
 	    }
@@ -28959,19 +28960,13 @@
 	            });
 	        }
 	    }, {
-	        key: 'iconChange',
-	        value: function iconChange(event) {
-	            this.setState({
-	                item: (0, _reactAddonsUpdate2.default)(this.state.item, { icon: { $set: event.target.value } })
-	            });
-	        }
-	    }, {
-	        key: 'ptitleChange',
-	        value: function ptitleChange(event) {
+	        key: 'itemPropChange',
+	        value: function itemPropChange(event) {
 	            var t = event.currentTarget.dataset.mode;
 	            this.setState({
-	                item: (0, _reactAddonsUpdate2.default)(this.state.item, { t: { $set: event.target.value } })
+	                item: (0, _reactAddonsUpdate2.default)(this.state.item, _defineProperty({}, '' + t, { $set: event.target.value }))
 	            });
+	            console.log(this.state.item);
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -28996,8 +28991,8 @@
 	                            _react2.default.createElement('input', { placeholder: '\u041D\u0430\u0438\u043C\u0435\u043D\u043E\u0432\u0430\u043D\u0438\u0435',
 	                                type: 'text',
 	                                'data-mode': 'ptitle',
-	                                autoFocus: 'autoFocus',
-	                                value: this.state.item.ptitle }),
+	                                value: this.state.item.ptitle,
+	                                onChange: this.itemPropChange }),
 	                            _react2.default.createElement(
 	                                'label',
 	                                null,
@@ -29007,7 +29002,11 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'input-field col s4' },
-	                            _react2.default.createElement('input', { placeholder: '\u041F\u0443\u0442\u044C', type: 'text' }),
+	                            _react2.default.createElement('input', { placeholder: '\u041F\u0443\u0442\u044C',
+	                                type: 'text',
+	                                'data-mode': 'apiurl',
+	                                value: this.state.item.apiurl,
+	                                onChange: this.itemPropChange }),
 	                            _react2.default.createElement(
 	                                'label',
 	                                { className: 'active' },
@@ -29017,7 +29016,11 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'input-field col s4' },
-	                            _react2.default.createElement('input', { placeholder: '\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0439 \u044D\u043B\u0435\u043C\u0435\u043D\u0442', type: 'number' }),
+	                            _react2.default.createElement('input', { placeholder: '\u0420\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0439 \u044D\u043B\u0435\u043C\u0435\u043D\u0442',
+	                                type: 'number',
+	                                'data-mode': 'parentid',
+	                                value: this.state.item.parentid,
+	                                onChange: this.itemPropChange }),
 	                            _react2.default.createElement(
 	                                'label',
 	                                { className: 'active' },
@@ -29031,7 +29034,11 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'input-field col s2' },
-	                            _react2.default.createElement('input', { placeholder: '\u041F\u043E\u0440\u044F\u0434\u043E\u043A', type: 'number', autoFocus: 'autoFocus' }),
+	                            _react2.default.createElement('input', { placeholder: '\u041F\u043E\u0440\u044F\u0434\u043E\u043A',
+	                                type: 'number',
+	                                'data-mode': 'orderby',
+	                                value: this.state.item.orderby,
+	                                onChange: this.itemPropChange }),
 	                            _react2.default.createElement(
 	                                'label',
 	                                { className: 'active' },
@@ -29043,7 +29050,11 @@
 	                            { className: 'input-field col s4' },
 	                            _react2.default.createElement(
 	                                'select',
-	                                { multiple: true, defaultValue: this.state.item.roles },
+	                                { multiple: true,
+	                                    defaultValue: this.state.item.roles,
+	                                    'data-mode': 'roles',
+	                                    value: this.state.item.roles,
+	                                    onChange: this.itemPropChange },
 	                                _react2.default.createElement(
 	                                    'option',
 	                                    { defaultValue: '[-1]', disabled: true },
@@ -29061,6 +29072,11 @@
 	                                ),
 	                                _react2.default.createElement(
 	                                    'option',
+	                                    { value: '4' },
+	                                    '\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\u0440'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'option',
 	                                    { value: '3' },
 	                                    'Option 3'
 	                                )
@@ -29075,9 +29091,10 @@
 	                            'div',
 	                            { className: 'input-field col s3' },
 	                            _react2.default.createElement('input', { placeholder: '\u0418\u043A\u043E\u043D\u043A\u0430',
-	                                onChange: this.iconChange,
+	                                onChange: this.itemPropChange,
 	                                type: 'text',
-	                                defaultValue: this.state.item.icon }),
+	                                defaultValue: this.state.item.icon,
+	                                'data-mode': 'icon' }),
 	                            _react2.default.createElement(
 	                                'label',
 	                                { className: 'active' },
