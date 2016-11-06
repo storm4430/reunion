@@ -5,7 +5,16 @@ module.exports = {
     entry: ['./dist/App.js'],
     output: {
         path: __dirname,
-        filename: './public/js/bundle.js'},
+        filename: './public/js/bundle.min.js'},
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            include: /\.min\.js$/,
+            minimize: true,
+            compress: {
+                warnings: false
+            }
+        })
+    ],
 
     module : {
         loaders: [

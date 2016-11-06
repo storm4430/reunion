@@ -6,7 +6,8 @@ export default class MenuItem extends React.Component{
     constructor(props) {
         super();
         this.state = {
-            item: props.item
+            item: props.item,
+            roles: props.roles
         };
         this.itempropChange = this.itempropChange.bind(this);
         this.saveItem = this.saveItem.bind(this);
@@ -25,7 +26,7 @@ export default class MenuItem extends React.Component{
                 Materialize.toast('Ok!', 3000, 'rounded green')
             })
             .catch(function (error) {
-                Materialize.toast(error.hint, 3000, 'rounded red')
+                Materialize.toast(error.message, 3000, 'rounded red')
             });
     }
 
@@ -36,6 +37,24 @@ export default class MenuItem extends React.Component{
             item: update(this.state.item, {[`${t}`]: {$set: event.target.value}})
         });
         console.log(this.state.item)
+    }
+
+    componentDidMount(){
+        $('select').material_select();
+    }
+
+    getRoles(){
+        return(
+            <select multiple
+                    defaultValue={this.state.item.roles}
+                    data-mode="roles"
+                    value={this.state.item.roles}
+                    onChange={this.itemPropChange}>
+                    {this.state.roles.map(i => { return(
+                        <option key={i.id} value={i.id} selected={this.state.item.roles.indexOf(i.id) === -1 ? 'selected':''}>{i.name}</option>)
+                    })}
+            </select>
+        )
     }
 
     getEditForm(){
@@ -80,11 +99,7 @@ export default class MenuItem extends React.Component{
                             <label className="active">Порядок</label>
                         </div>
                         <div className="input-field col s4">
-                            <input placeholder="Роли"
-                                   onChange={this.itempropChange}
-                                   data-mode="rolenames"
-                                   type="text"
-                                   defaultValue={this.state.item.rolenames}/>
+                            {this.getRoles()}
                             <label className="active">Роли</label>
                         </div>
                         <div className="input-field col s3">
@@ -98,10 +113,10 @@ export default class MenuItem extends React.Component{
                         <div className="input-field col s1">
                             <i className="material-icons">{this.state.item.icon}</i>
                         </div>
-                        <div className="input-field col s2">
-                            <a className="waves-effect waves-light btn"
+                        <div className="input-field col s2  center-align">
+                            <a className="waves-effect waves-light btn btn-floating"
                                onClick={this.saveItem}>
-                                <i className="material-icons left">done</i>СОХРАНИТЬ</a>
+                                <i className="material-icons left">done</i></a>
                         </div>
                     </div>
                 </form>

@@ -9,14 +9,10 @@ export default class MenuEdit extends React.Component{
     constructor() {
         super();
         this.state = {
-            data: []
+            data: [],
+            roles:[]
         };
-        // this.addNewMenuItem = this.addNewMenuItem.bind(this);
     }
-
-    // addNewMenuItem(){
-    //     alert('Adding a new item')
-    // }
 
     loadDocsFromServer() {
         $('#pl').html(`<div class="progress green">
@@ -32,13 +28,20 @@ export default class MenuEdit extends React.Component{
             .catch(error => {
                 Materialize.toast(error.message, 3000, 'rounded red')
             });
+        axios.get(`http://193.124.178.232:100/wbp/roles`)
+            .then(res => {
+                let roles = res.data;
+                this.setState({ roles });
+            })
+            .catch(error => {
+                Materialize.toast(error.message, 3000, 'rounded red')
+            });
     }
-    // {/*<MenuItem item={i} />*/}
 
     fillMenu(){
         return this.state.data.map(i =>
             (
-                <MenuItem item={i} key={i.id} />
+                <MenuItem item={i} key={i.id} roles={this.state.roles}/>
         ))
     }
 

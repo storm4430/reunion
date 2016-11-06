@@ -95,7 +95,7 @@ export default class Menu extends React.Component {
                     <ul id="slide-out" className="side-nav">
                         <li>
                             <div className="userView">
-                                <img className="background" src= {this.state.head.background}/>
+                                <img className="background" src={this.state.head.background}/>
                                 <a href="#!user"><img className="circle" src={this.state.head.image} /></a>
                                 <a href="#!name"><span className="white-text name">{this.state.head.fio}</span></a>
                                 <a href="#!email"><span className="white-text email">{this.state.head.mail}</span></a>
