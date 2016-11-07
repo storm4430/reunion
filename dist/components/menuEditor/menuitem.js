@@ -26,7 +26,7 @@ export default class MenuItem extends React.Component{
                 Materialize.toast('Ok!', 3000, 'rounded green')
             })
             .catch(function (error) {
-                Materialize.toast(error.message, 3000, 'rounded red')
+                Materialize.toast(error.response.data.message, 3000, 'rounded red');
             });
     }
 
@@ -36,22 +36,39 @@ export default class MenuItem extends React.Component{
         this.setState({
             item: update(this.state.item, {[`${t}`]: {$set: event.target.value}})
         });
-        console.log(this.state.item)
+    }
+
+    setMultiRoles(st){
+        this.setState({
+            item: update(this.state.item, {roles: st})
+        });
     }
 
     componentDidMount(){
         $('select').material_select();
+        $('select').off().change(function(){
+            var newValuesArr = [],
+                select = $(this),
+                ul = select.prev();
+            ul.children('li').toArray().forEach(function (li, i) {
+                if ($(li).hasClass('active')) {
+                    newValuesArr.push(select.children('option').toArray()[i].value);
+                }
+            });
+            select.val(newValuesArr);
+            $(".hms[data-r='" + select.attr('data-r') + "']").val(newValuesArr).click();
+        });
     }
 
     getRoles(){
         return(
             <select multiple
-                    defaultValue={this.state.item.roles}
-                    data-mode="roles"
+                    data-r={this.state.item.id}
+                    onChange={this.itempropChange}
                     value={this.state.item.roles}
-                    onChange={this.itemPropChange}>
+                    data-mode="roles">
                     {this.state.roles.map(i => { return(
-                        <option key={i.id} value={i.id} selected={this.state.item.roles.indexOf(i.id) === -1 ? 'selected':''}>{i.name}</option>)
+                        <option key={i.id} value={i.id} selected={this.state.item.roles.indexOf(i.id) === -1}>{i.name}</option>)
                     })}
             </select>
         )
@@ -63,6 +80,7 @@ export default class MenuItem extends React.Component{
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s4">
+                            <input onClick={this.itempropChange} className="hms" data-r={this.state.item.id} hidden="hidden" data-mode="roles" />
                             <input placeholder="Наименование"
                                    onChange={this.itempropChange}
                                    type="text"
@@ -98,7 +116,7 @@ export default class MenuItem extends React.Component{
                                    autoFocus="autoFocus"/>
                             <label className="active">Порядок</label>
                         </div>
-                        <div className="input-field col s4">
+                        <div className="input-field col s4 hms">
                             {this.getRoles()}
                             <label className="active">Роли</label>
                         </div>

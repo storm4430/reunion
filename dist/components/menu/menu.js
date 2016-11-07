@@ -89,13 +89,14 @@ export default class Menu extends React.Component {
     }
 
     render() {
+        let styles = 'transform: translateX(0px)';
         return (
             <div>
                 <div id="mmenu">
-                    <ul id="slide-out" className="side-nav">
+                    <ul id="slide-out" className="side-nav" style={{styles}}>
                         <li>
-                            <div className="userView">
-                                <img className="background" src={this.state.head.background}/>
+                            <div className="userView" >
+                                <div className="background"><img src={this.state.head.background}/></div>
                                 <a href="#!user"><img className="circle" src={this.state.head.image} /></a>
                                 <a href="#!name"><span className="white-text name">{this.state.head.fio}</span></a>
                                 <a href="#!email"><span className="white-text email">{this.state.head.mail}</span></a>

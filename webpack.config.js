@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
     entry: ['./dist/App.js'],
@@ -13,7 +14,15 @@ module.exports = {
             compress: {
                 warnings: false
             }
-        })
+        }),
+
+    new CompressionPlugin({
+        asset: "[path].gz[query]",
+        algorithm: "gzip",
+        test: /\.js$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8
+    })
     ],
 
     module : {

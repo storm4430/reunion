@@ -46,7 +46,7 @@ export default class NewMenuItem extends React.Component{
                                    data-mode="ptitle"
                                    value={this.state.item.ptitle}
                                    onChange={this.itemPropChange}/>
-                            <label>Наименование</label>
+                            <label className="active">Наименование</label>
                         </div>
                         <div className="input-field col s4">
                             <input placeholder="Путь"
