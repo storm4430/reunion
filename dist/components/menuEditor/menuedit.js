@@ -70,13 +70,13 @@ export default class MenuEdit extends React.Component{
                     <li>
                         <div className="indigo darken-3 white-text  p-up">
                             <div className="row">
-                                <div className="col s2 center">id</div>
+                                <div className="col s1 center">id</div>
                                 <div className="col s2 center">Наименование</div>
                                 <div className="col s1 center">Родитель</div>
-                                <div className="col s3 center">Сcылка</div>
+                                <div className="col s1 center">Сcылка</div>
                                 <div className="col s1 center">Порядок</div>
-                                <div className="col s2 center">Роли</div>
-                                <div className="col s1">Иконка!</div>
+                                <div className="col s5 center">Роли</div>
+                                <div className="col s1">Иконка</div>
                             </div>
                         </div>
                     </li>
@@ -92,7 +92,7 @@ export default class MenuEdit extends React.Component{
                 </div>
                 <div id="modal1" className="modal bottom-sheet">
                     <div className="modal-content">
-                        <NewMenuItem />
+                        <NewMenuItem roles={this.state.roles}/>
                     </div>
                     <div className="modal-footer">
                         <a href="#menuedit" className="modal-action modal-close waves-effect waves-green btn-flat">Закрыть</a>

@@ -1,6 +1,6 @@
 import React from 'react';
 import update from 'react-addons-update';
-import axios from 'axios'
+import axios from 'axios';
 
 export default class MenuItem extends React.Component{
     constructor(props) {
@@ -10,6 +10,7 @@ export default class MenuItem extends React.Component{
             roles: props.roles
         };
         this.itempropChange = this.itempropChange.bind(this);
+        // this.bindArrayChange = this.bindArrayChange.bind(this);
         this.saveItem = this.saveItem.bind(this);
     }
 
@@ -19,7 +20,7 @@ export default class MenuItem extends React.Component{
         )
     }
 
-    saveItem(e){
+    saveItem(){
         console.log(JSON.stringify(this.state.item))
         axios.put('http://193.124.178.232:100/wbp/menu?id=' + this.state.item.id, this.state.item)
             .then(function (response) {
@@ -33,20 +34,16 @@ export default class MenuItem extends React.Component{
     //Menu item changing event
     itempropChange(event){
         let t = event.currentTarget.dataset.mode;
+        let s = (t === 'roles')?
+            JSON.parse('[' + event.target.value + ']'):
+            event.target.value;
         this.setState({
-            item: update(this.state.item, {[`${t}`]: {$set: event.target.value}})
-        });
+            item: update(this.state.item, {[`${t}`]: {$set: s}})
+        })
     }
 
-    setMultiRoles(st){
-        this.setState({
-            item: update(this.state.item, {roles: st})
-        });
-    }
-
-    componentDidMount(){
-        $('select').material_select();
-        $('select').off().change(function(){
+    bindArrayChange(){
+        $('select').off().change(function() {
             var newValuesArr = [],
                 select = $(this),
                 ul = select.prev();
@@ -55,12 +52,16 @@ export default class MenuItem extends React.Component{
                     newValuesArr.push(select.children('option').toArray()[i].value);
                 }
             });
-            select.val(newValuesArr);
             $(".hms[data-r='" + select.attr('data-r') + "']").val(newValuesArr).click();
         });
     }
 
-    getRoles(){
+    componentDidMount(){
+        $('select').material_select();
+        this.bindArrayChange();
+    }
+
+    getRoles() {
         return(
             <select multiple
                     data-r={this.state.item.id}
@@ -80,7 +81,7 @@ export default class MenuItem extends React.Component{
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s4">
-                            <input onClick={this.itempropChange} className="hms" data-r={this.state.item.id} hidden="hidden" data-mode="roles" />
+                            <input multiple="multiple" onClick={this.itempropChange} className="hms" data-r={this.state.item.id} hidden="hidden" data-mode="roles" />
                             <input placeholder="Наименование"
                                    onChange={this.itempropChange}
                                    type="text"
@@ -147,12 +148,12 @@ export default class MenuItem extends React.Component{
             <li key={this.state.item.id}>
                 <div className="collapsible-header">
                     <div className="row center">
-                        <div className="col s2">{this.state.item.id}</div>
+                        <div className="col s1">{this.state.item.id}</div>
                         <div className="col s2">{this.state.item.ptitle}</div>
                         <div className="col s1">{this.state.item.parentid}</div>
-                        <div className="col s3">{this.state.item.apiurl}</div>
+                        <div className="col s1">{this.state.item.apiurl}</div>
                         <div className="col s1">{this.state.item.orderby}</div>
-                        <div className="col s2">{this.state.item.rolenames}</div>
+                        <div className="col s5">{this.state.item.rolenames}</div>
                         <div className="col s1 center" ><i className="material-icons">{this.state.item.icon}</i></div>
                     </div>
                 </div>
