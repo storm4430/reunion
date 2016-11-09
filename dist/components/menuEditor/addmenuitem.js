@@ -4,10 +4,10 @@ import axios from 'axios';
 
 export default class NewMenuItem extends React.Component{
     constructor(props) {
-        super();
+        super(props);
         this.state = {
-            roles: props.roles,
-            item:[]
+            roles: [],
+            item:{}
         };
         this.itempropChange = this.itempropChange.bind(this);
         this.saveItem = this.saveItem.bind(this);
@@ -22,6 +22,12 @@ export default class NewMenuItem extends React.Component{
             .catch(function (error) {
                 Materialize.toast(error.hint, 3000, 'rounded red')
             });
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState( {roles:nextProps} );
+        console.log(this.state.roles)
+
     }
 
     //Menu item changing event
@@ -49,24 +55,31 @@ export default class NewMenuItem extends React.Component{
         });
     }
 
+    shouldComponentUpdate(){
+        return true;
+    }
+
     getRoles() {
-        console.log('My roles are: ',this.state.roles);
-        return(
+        return
+        (
             <select multiple
                     data-r={this.state.item.id}
                     onChange={this.itempropChange}
                     value={this.state.item.roles}
-                    data-mode="roles">
-                {this.state.roles.map(i => { return (
-                    <option key={i.id} value={i.id}>{i.name}</option>)
-                })}
+                    data-mode="roles"
+                    id="nroles">
+                    {
+                        this.state.roles.map(i => { return (
+                            <option key={i.id} value={i.id}>{i.name}</option>)
+                    })}
             </select>
-        )
+        );
     }
 
     componentDidMount(){
-        $('select').material_select();
+        $('#nroles').material_select();
         this.bindArrayChange();
+        console.log(this.state.roles);
     }
 
     getEditForm(){
