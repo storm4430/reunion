@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 
 import UserPic from './userpic';
+import UserBackground from './backgound';
+import PersData from './persWorkData';
+import UserContacts from './userContacts';
 
 export default class UserSettings extends React.Component {
     constructor() {
@@ -16,7 +19,6 @@ export default class UserSettings extends React.Component {
             .then(res => {
                 const usettings = res.data;
                 this.setState({ usettings });
-                console.log(this.state.usettings);
                 $('#pl').empty();
             })
             .catch(error => {
@@ -26,13 +28,24 @@ export default class UserSettings extends React.Component {
 
     componentDidMount() {
        this.getUserSettings();
-
         $('.button-collapse').sideNav('hide');
     }
 
     render() {
         return (
-           <UserPic image={this.state.usettings.img} />
+            <div>
+                <div className="row">
+                   <UserPic image={this.state.usettings.img} />
+                   <UserBackground image={this.state.usettings.backimg} />
+                </div>
+                <div className="row">
+                    <PersData fio={this.state.usettings.fio} orgs={this.state.usettings.orgs} position={this.state.usettings.position}/>
+                    <UserContacts mail={this.state.usettings.mail} tel={this.state.usettings.tel} />
+                </div>
+                <div className="row">
+
+                </div>
+            </div>
         )
     }
 }

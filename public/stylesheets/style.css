@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Russo+One');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Condensed');
 body {
     /*background: url("http://www.fonstola.ru/pic/201111/1920x1200/fonstola.ru-50518.jpg") no-repeat center bottom fixed;*/
     /*background-size: cover;*/
     /*padding: 50px;*/
-    font: 14px 'Russo One', sans-serif;
+    font: 14px 'Ubuntu Condensed', sans-serif;
     display: flex;
     min-height: 100vh;
     flex-direction: column;

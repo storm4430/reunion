@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class UserPic extends React.Component{
+export default class UserBackground extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -18,11 +18,11 @@ export default class UserPic extends React.Component{
                 <div className="card-panel grey lighten-5 z-depth-1">
                     <div className="row valign-wrapper">
                         <div className="col s2">
-                            <img src={ this.state.curentPic.val } alt="" className="circle responsive-img" />
+                            <img src={ this.state.curentPic.val } alt=""  />
                         </div>
                         <div className="col s10">
                           <span className="black-text">
-                             <a className="waves-effect waves-teal btn-flat">Изменить изображение</a>
+                             <a className="waves-effect waves-teal btn-flat">Изменить фон</a>
                           </span>
                         </div>
                     </div>
