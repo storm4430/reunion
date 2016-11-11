@@ -10,7 +10,6 @@ export default class UserContacts extends React.Component{
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
         this.setState(
             {
                 mail : nextProps.mail,
@@ -37,7 +36,6 @@ export default class UserContacts extends React.Component{
     }
 
     render() {
-        console.log(this.state);
         return (
             <div className="col s12 m6">
                 <div className="card blue-grey darken-1">
