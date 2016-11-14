@@ -39,12 +39,13 @@ export default class UserBackground extends React.Component{
     }
 
     render() {
+        const styles = `max-width:100px`;
         return (
             <div className="col s12 m6 l6">
                 <div className="card-panel grey lighten-5 z-depth-1">
                     <div className="row valign-wrapper">
                         <div className="col s2">
-                            <img src={ this.state.curentPic.val } alt="" style={{width:100+'px'}} />
+                            <img src={ this.state.curentPic.val } alt="" className="responsive-img" style={{styles}} />
                         </div>
                         <div className="col s8">
                           <span className="black-text">
