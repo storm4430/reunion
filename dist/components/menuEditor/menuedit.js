@@ -92,7 +92,7 @@ export default class MenuEdit extends React.Component{
                 </div>
                 <div id="modal1" className="modal bottom-sheet">
                     <div className="modal-content">
-                        <NewMenuItem droles={this.state.roles}/>
+                        <NewMenuItem />
                     </div>
                     <div className="modal-footer">
                         <a href="#menuedit" className="modal-action modal-close waves-effect waves-green btn-flat">Закрыть</a>

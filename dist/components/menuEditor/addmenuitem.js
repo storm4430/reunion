@@ -6,7 +6,6 @@ export default class NewMenuItem extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            roles: [],
             item:{}
         };
         this.itempropChange = this.itempropChange.bind(this);
@@ -24,63 +23,15 @@ export default class NewMenuItem extends React.Component{
             });
     }
 
-    componentWillReceiveProps(nextProps){
-        this.setState( {roles:nextProps} );
-        console.log(this.state.roles)
-
-    }
-
     //Menu item changing event
     itempropChange(event){
         let t = event.currentTarget.dataset.mode;
-        let s = (t === 'roles')?
-            JSON.parse('[' + event.target.value + ']'):
-            event.target.value;
+        let s = event.target.value;
         this.setState({
             item: update(this.state.item, {[`${t}`]: {$set: s}})
         })
     }
 
-    bindArrayChange(){
-        $('select').off().change(function() {
-            var newValuesArr = [],
-                select = $(this),
-                ul = select.prev();
-            ul.children('li').toArray().forEach(function (li, i) {
-                if ($(li).hasClass('active')) {
-                    newValuesArr.push(select.children('option').toArray()[i].value);
-                }
-            });
-            $(".hms[data-r='" + select.attr('data-r') + "']").val(newValuesArr).click();
-        });
-    }
-
-    shouldComponentUpdate(){
-        return true;
-    }
-
-    getRoles() {
-        return
-        (
-            <select multiple
-                    data-r={this.state.item.id}
-                    onChange={this.itempropChange}
-                    value={this.state.item.roles}
-                    data-mode="roles"
-                    id="nroles">
-                    {
-                        this.state.roles.map(i => { return (
-                            <option key={i.id} value={i.id}>{i.name}</option>)
-                    })}
-            </select>
-        );
-    }
-
-    componentDidMount(){
-        $('#nroles').material_select();
-        this.bindArrayChange();
-        console.log(this.state.roles);
-    }
 
     getEditForm(){
         return(
@@ -104,38 +55,13 @@ export default class NewMenuItem extends React.Component{
                                    onChange={this.itempropChange} />
                             <label className="active">Путь</label>
                         </div>
-                        <div className="input-field col s4">
+                        <div className="input-field col s2">
                             <input placeholder="Родительский элемент"
                                    type="number"
                                    data-mode="parentid"
                                    value={this.state.item.parentid}
                                    onChange={this.itempropChange} />
                             <label className="active">Родительский элемент</label>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="input-field col s2">
-                            <input placeholder="Порядок"
-                                   type="number"
-                                   data-mode="orderby"
-                                   value={this.state.item.orderby}
-                                   onChange={this.itempropChange} />
-                            <label className="active">Порядок</label>
-                        </div>
-                        <div className="input-field col s4">
-                            {this.getRoles()}
-                            <label className="active">Роли</label>
-                        </div>
-                        <div className="input-field col s3">
-                            <input placeholder="Иконка"
-                                   onChange={this.itempropChange}
-                                   type="text"
-                                   defaultValue={this.state.item.icon}
-                                   data-mode="icon" />
-                            <label className="active">Иконка</label>
-                        </div>
-                        <div className="input-field col s1">
-                            <i className="material-icons">{this.state.item.icon}</i>
                         </div>
                         <div className="input-field col s2">
                             <a className="waves-effect waves-light btn"
