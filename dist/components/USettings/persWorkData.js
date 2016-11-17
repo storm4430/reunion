@@ -46,7 +46,7 @@ export default class PersData extends React.Component{
                     </div>
                     <div className="col s1 right-align">
                         <a className="btn-floating activator waves-effect waves-light darken-2 right">
-                            <i className="material-icons">contacts</i>
+                            <i className="material-icons">perm_identity</i>
                         </a>
                     </div>
                 </div>

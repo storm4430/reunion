@@ -4,16 +4,21 @@ export default class UserContacts extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            mail: [],
-            tel: []
+            mail     : [],
+            tel      : [],
+            fio      : {},
+            position : {}
         }
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
         this.setState(
             {
-                mail : nextProps.mail,
-                tel  : nextProps.tel
+                mail     : nextProps.data.mail,
+                tel      : nextProps.data.tel,
+                fio      : nextProps.data.fio,
+                position : nextProps.data.position
             } );
     }
 
@@ -24,7 +29,7 @@ export default class UserContacts extends React.Component{
                     <div className="col s1">
                         <a href="#modal1"><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>email</i></a>
                     </div>
-                    <div className="col s4">
+                    <div className="col s2">
                         {i.val}
                     </div>
                     <div className="col s2">
@@ -47,7 +52,7 @@ export default class UserContacts extends React.Component{
                 <div className="col s1">
                     <a href="#modal1"><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>contact_phone</i></a>
                 </div>
-                <div className="col s4">
+                <div className="col s2">
                     {i.val}
                 </div>
                 <div className="col s2">
@@ -68,28 +73,21 @@ export default class UserContacts extends React.Component{
     }
 
     render() {
+        const styles = {
+            display: 'none',
+            transform: 'translateY(0 + px)'
+        };
         return (
-            <div>
-                <div className="col s12 m6">
-                    <div className="card blue-grey darken-1">
-                        <div className="card-content white-text">
-                            <span className="card-title">Контакты</span>
-                            { this.showMails() }
-                            { this.showTels() }
-                        </div>
-                    </div>
-                </div>
-                <div id="modal1" className="modal">
-                    <div className="modal-content">
-                        <h4>Modal Header</h4>
-                        <p>A bunch of text</p>
-                    </div>
-                    <div className="modal-footer">
-                        <a href="#!" className="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-                    </div>
-                </div>
+            <div className="card-reveal" style={styles}>
+                <p>
+                    <span className="card-title grey-text text-darken-4">{ this.state.fio.val } <i className="material-icons right">done</i></span>
+                    <span><i className="mdi-action-perm-identity cyan-text text-darken-2"></i> { this.state.position.val }</span>
+                </p>
+                { this.showTels() }
+                { this.showMails() }
             </div>
         )
     }
 }
 
+//
