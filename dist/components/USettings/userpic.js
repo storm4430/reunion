@@ -7,7 +7,7 @@ export default class UserPic extends React.Component{
         super(props);
         this.state = {
             curentPic : {}
-        },
+        };
         this.changeUserPic = this.changeUserPic.bind(this);
         this.changeIconClick = this.changeIconClick.bind(this);
     }
@@ -19,7 +19,6 @@ export default class UserPic extends React.Component{
     changeUserPic(event) {
         event.persist();
         $('#uploader').addClass('active');
-        let t = URL.createObjectURL(event.currentTarget.files[0]);
         let fd = new FormData;
         fd.append('ava', event.currentTarget.files[0]);
         axios.post('http://193.124.178.232:100/wbp/ava', fd)

@@ -70,7 +70,7 @@ export default class Menu extends React.Component {
         return (this
                     .state
                         .items
-                            .sort((obj1, obj2) => { return obj1.id - obj2.id })
+                            .sort((obj1, obj2) => { return obj1.parentid - obj2.parentid })
                                 .map(item => this.createtreenode(item)))
     }
 

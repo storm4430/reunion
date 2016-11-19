@@ -5,6 +5,7 @@ import UserPic from './userpic';
 import UserBackground from './backgound';
 import PersData from './persWorkData';
 import UserContacts from './userContacts';
+import ModalConfirmation from './ModalConfirmation';
 
 export default class UserSettings extends React.Component {
     constructor() {
@@ -27,22 +28,10 @@ export default class UserSettings extends React.Component {
     }
 
     componentDidMount() {
-       this.getUserSettings();
+        this.getUserSettings();
         $('.button-collapse').sideNav('hide');
+
     }
-// <div>
-// <div className="row">
-// <UserPic image={this.state.usettings.img} />
-// <UserBackground image={this.state.usettings.backimg} />
-// </div>
-// <div className="row">
-// <PersData fio={this.state.usettings.fio} orgs={this.state.usettings.orgs} position={this.state.usettings.position}/>
-// <UserContacts mail={this.state.usettings.mail} tel={this.state.usettings.tel} />
-// </div>
-// <div className="row">
-//
-// </div>
-// </div>
 
     render() {
         return (
@@ -51,6 +40,7 @@ export default class UserSettings extends React.Component {
                 <UserPic image={ this.state.usettings.img }/>
                 <PersData fio={ this.state.usettings.fio } orgs={ this.state.usettings.orgs } position={ this.state.usettings.position } />
                 <UserContacts data={ this.state.usettings }/>
+
             </div>
         )
     }

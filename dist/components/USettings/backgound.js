@@ -7,7 +7,7 @@ export default class UserBackground extends React.Component{
         super(props);
         this.state = {
             curentPic : {}
-        },
+        };
         this.changeUserPic = this.changeUserPic.bind(this);
         this.changeBackGroundClick = this.changeBackGroundClick.bind(this);
     }
@@ -19,7 +19,6 @@ export default class UserBackground extends React.Component{
     changeUserPic(event) {
         event.persist();
         $('#ubloader').addClass('active');
-        let t = URL.createObjectURL(event.currentTarget.files[0]);
         let fd = new FormData;
         fd.append('usrbg', event.currentTarget.files[0]);
         axios.post('http://193.124.178.232:100/wbp/usrbg', fd)
@@ -43,7 +42,6 @@ export default class UserBackground extends React.Component{
         $('#hidBckInput').click();
     }
     render() {
-        const styles = `max-width:100px`;
         return (
             <div className="card-image waves-effect waves-block waves-light">
                 <input type="file" accept="image/jpeg" onChange={this.changeUserPic} hidden="hidden" id="hidBckInput" />
