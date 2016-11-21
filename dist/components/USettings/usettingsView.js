@@ -11,7 +11,10 @@ export default class UserSettings extends React.Component {
     constructor() {
         super();
         this.state =  {
-            usettings: {}
+            usettings: {
+                mail : [],
+                tel  : []
+            }
         }
     }
 
@@ -37,10 +40,21 @@ export default class UserSettings extends React.Component {
         return (
             <div id="profile-page-header" className="card">
                 <UserBackground image={this.state.usettings.backimg} />
-                <UserPic image={ this.state.usettings.img }/>
+                <UserPic image={ this.state.usettings.img } />
                 <PersData fio={ this.state.usettings.fio } orgs={ this.state.usettings.orgs } position={ this.state.usettings.position } />
-                <UserContacts data={ this.state.usettings }/>
-
+                <UserContacts data={ this.state.usettings } />
+                {
+                    this.state.usettings.tel.map(i => { return (
+                            <ModalConfirmation data={ i } tip="tel" key={ i.id } />
+                        )
+                    })
+                }
+                {
+                    this.state.usettings.mail.map(i => {return(
+                            <ModalConfirmation data={ i } tip="mail" key={ i.id } />
+                        )
+                    })
+                }
             </div>
         )
     }

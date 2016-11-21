@@ -7,27 +7,28 @@ export default  class ModalConfirmation extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            userSettings : {
-                fio : {}
-            }
+            userSettings : {},
+            typeMod : null
         }
     }
 
-    componentDidMount() {
-
-    }
+    // componentDidMount() {
+    //
+    // }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            userSettings : nextProps.data
-        })
+            userSettings : nextProps.data,
+            typeMod      : nextProps.tip
+        });
+        console.log( 'jagajh', nextProps);
     }
 
     render(){
         return (
-            <div>
+            <div id={( this.state.typeMod === "tel" )? "telmodal" : "mailmodal" + this.state.userSettings.id} className="modal" >
                 <div className="modal-content">
-                    <h4>{ this.state.userSettings.fio.val}</h4>
+                    <h4>{ this.state.userSettings.val}</h4>
                     <p>Подтверждение</p>
                 </div>
                 <div className="modal-footer">
