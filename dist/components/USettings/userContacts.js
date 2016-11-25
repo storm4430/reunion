@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ModalConfirmation from './ModalConfirmation';
 
 export default class UserContacts extends React.Component{
@@ -11,6 +12,7 @@ export default class UserContacts extends React.Component{
             position : {}
         };
         this.addNewContact = this.addNewContact.bind(this);
+        this.getConfirmationWindow = this.getConfirmationWindow.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -24,12 +26,27 @@ export default class UserContacts extends React.Component{
         $('.modal').modal();
     }
 
+    getConfirmationWindow(event){
+        event.preventDefault();
+        let t = event.currentTarget.dataset.storage;
+        console.log('data-storage is: ', t)
+        ReactDOM.render(
+            <ModalConfirmation data={ t } tip={ event.currentTarget.dataset.tip }/>,
+            document.getElementById('modalWindow')
+        );
+
+        //$('.modal').modal();
+        $('#modalWindow').modal('open');
+        // document.getElementById('modalWindow').innerHTML = cont;
+        // document.getElementById('modalWindow').modal('show');
+    }
+
     showMails(){
         return(
             this.state.mail.map(i =>  { return (
                 <div className="row" key={i.id}>
                     <div className="col s1">
-                        <a href={"#mailmodal" + i.id}><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>email</i></a>
+                        <a href="#" onClick={this.getConfirmationWindow} data-storage={ i.val } data-tip="mail"><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>email</i></a>
                     </div>
                     <div className="col s2">
                         {i.val}
@@ -53,7 +70,7 @@ export default class UserContacts extends React.Component{
             this.state.tel.map(i =>  { return (
                 <div className="row" key={i.id}>
                     <div className="col s1">
-                        <a href={"#telmodal" + i.id}><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>contact_phone</i></a>
+                        <a href="#" onClick={this.getConfirmationWindow} data-storage={ i }  data-tip="tel"><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>contact_phone</i></a>
                     </div>
                     <div className="col s2">
                         {i.val}

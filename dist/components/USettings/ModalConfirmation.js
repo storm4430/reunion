@@ -21,12 +21,12 @@ export default  class ModalConfirmation extends React.Component{
             userSettings : nextProps.data,
             typeMod      : nextProps.tip
         });
-        console.log( 'jagajh', nextProps);
     }
 
-    render(){
+    render() {
+        console.log( 'value', this.state.userSettings[0]);
         return (
-            <div id={( this.state.typeMod === "tel" )? "telmodal" : "mailmodal" + this.state.userSettings.id} className="modal" >
+            <div>
                 <div className="modal-content">
                     <h4>{ this.state.userSettings.val}</h4>
                     <p>Подтверждение</p>
