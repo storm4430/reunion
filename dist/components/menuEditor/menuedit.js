@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import Api from '../../APIFactory';
 import { Link } from 'react-router';
 
 import MenuItem from './menuitem';
@@ -12,6 +12,7 @@ export default class MenuEdit extends React.Component{
             data: [],
             roles:[]
         };
+        this.url = new Api();
     }
 
     loadDocsFromServer() {
@@ -19,22 +20,17 @@ export default class MenuEdit extends React.Component{
                             <div class="indeterminate red">
                             </div>
                        </div>`);
-        axios.get(`http://193.124.178.232:100/wbp/menusel`)
+        this.url.get(`/menusel`, null)
             .then(res => {
-                const data = res.data;
+                const data = res;
                 this.setState({ data });
                 $('#pl').empty();
-            })
-            .catch(error => {
-                Materialize.toast(error.message, 3000, 'rounded red')
             });
-        axios.get(`http://193.124.178.232:100/wbp/roles`)
+
+        this.url.get(`/roles`, null)
             .then(res => {
-                let roles = res.data;
+                let roles = res;
                 this.setState({ roles });
-            })
-            .catch(error => {
-                Materialize.toast(error.message, 3000, 'rounded red')
             });
     }
 

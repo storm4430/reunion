@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Api from './../../APIFactory'
 
 import UserPic from './userpic';
 import UserBackground from './backgound';
@@ -16,18 +17,28 @@ export default class UserSettings extends React.Component {
                 tel  : []
             }
         }
+        this.api = new Api();
+
     }
 
     getUserSettings() {
-        axios.get('http://193.124.178.232:100/wbp/settings')
+        this.api.get('/settings', null)
             .then(res => {
-                const usettings = res.data;
+                const usettings = res
                 this.setState({ usettings });
-                $('#pl').empty();
             })
-            .catch(error => {
-                Materialize.toast(error.message, 3000, 'rounded red')
-            });
+
+
+
+        // axios.get('http://193.124.178.232:100/wbp/settings')
+        //     .then(res => {
+        //         const usettings = res.data;
+        //         this.setState({ usettings });
+        //         $('#pl').empty();
+        //     })
+        //     .catch(error => {
+        //         Materialize.toast(error.message, 3000, 'rounded red')
+        //     });
     }
 
     componentDidMount() {

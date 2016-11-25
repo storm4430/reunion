@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import { Link } from 'react-router';
+import Api from './../../APIFactory'
 
 export default class Menu extends React.Component {
     constructor(props) {
@@ -10,17 +10,24 @@ export default class Menu extends React.Component {
             items: [],
             head:{},
         };
+        this.api = new Api();
+    }
+
+    get_cookie ( cookie_name )
+    {
+        var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+
+        if ( results )
+            return ( unescape ( results[2] ) );
+        else
+            return null;
     }
 
     getData() {
-        axios.get(`http://193.124.178.232:100/wbp/menu`)
+        this.api.get('/menu', null)
             .then(res => {
-                const items = res.data;
-                this.setState({ items: items.data, head: items });
+                this.setState({ items: res.data, head: res });
             })
-            .catch(error => {
-                Materialize.toast(error.message, 3000, 'rounded red')
-            });
     }
 
     hasChild(id) {
