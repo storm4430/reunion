@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Api from './../../APIFactory';
+
 import ModalConfirmation from './ModalConfirmation';
+import NewContact from './NewContact';
 
 export default class UserContacts extends React.Component{
     constructor(props) {
@@ -9,8 +12,9 @@ export default class UserContacts extends React.Component{
             mail     : [],
             tel      : [],
             fio      : {},
-            position : {}
+            position : {},
         };
+        this.api = new Api();
         this.addNewContact = this.addNewContact.bind(this);
         this.getConfirmationWindow = this.getConfirmationWindow.bind(this);
     }
@@ -23,22 +27,22 @@ export default class UserContacts extends React.Component{
                 fio      : nextProps.data.fio,
                 position : nextProps.data.position
             } );
-        $('.modal').modal();
     }
 
     getConfirmationWindow(event){
         event.preventDefault();
         let t = event.currentTarget.dataset.storage;
-        console.log('data-storage is: ', t)
+
+        let s = ( event.currentTarget.dataset.tip === 'mail')
+            ? $.grep(this.state.mail, (e) => { return e.id == t })
+            : $.grep(this.state.tel, (e) => { return e.id == t });
+        console.log('object is ',s)
         ReactDOM.render(
-            <ModalConfirmation data={ t } tip={ event.currentTarget.dataset.tip }/>,
+            <ModalConfirmation contact={ s[0] } tip={ event.currentTarget.dataset.tip }/>,
             document.getElementById('modalWindow')
         );
 
-        //$('.modal').modal();
         $('#modalWindow').modal('open');
-        // document.getElementById('modalWindow').innerHTML = cont;
-        // document.getElementById('modalWindow').modal('show');
     }
 
     showMails(){
@@ -46,7 +50,7 @@ export default class UserContacts extends React.Component{
             this.state.mail.map(i =>  { return (
                 <div className="row" key={i.id}>
                     <div className="col s1">
-                        <a href="#" onClick={this.getConfirmationWindow} data-storage={ i.val } data-tip="mail"><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>email</i></a>
+                        <a href="#" onClick={this.getConfirmationWindow} data-storage={ i.id } data-tip="mail"><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>email</i></a>
                     </div>
                     <div className="col s2">
                         {i.val}
@@ -70,7 +74,7 @@ export default class UserContacts extends React.Component{
             this.state.tel.map(i =>  { return (
                 <div className="row" key={i.id}>
                     <div className="col s1">
-                        <a href="#" onClick={this.getConfirmationWindow} data-storage={ i }  data-tip="tel"><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>contact_phone</i></a>
+                        <a href="#" onClick={this.getConfirmationWindow} data-storage={ i.id }  data-tip="tel"><i className={(i.verified === true)? "material-icons green-text": "material-icons red-text"}>contact_phone</i></a>
                     </div>
                     <div className="col s2">
                         {i.val}
@@ -88,8 +92,21 @@ export default class UserContacts extends React.Component{
         )
     }
 
+    postNewContact(obj) {
+        let api = new Api();
+        (obj.selected == 'email')
+            ?  api.post('/email', obj, null)
+            :  api.post('/phone', obj, null)
+    }
+
     addNewContact(event) {
         event.preventDefault();
+        ReactDOM.render(
+            <NewContact onAddNewContact={ this.postNewContact }/>,
+            document.getElementById('modalWindow')
+        );
+
+        $('#modalWindow').modal('open');
     }
 
     componentDidMount() {

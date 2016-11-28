@@ -23,4 +23,38 @@ export default class ApiFactory {
         return result;
     }
 
+    post(url, data, callback) {
+        let result = axios.post(this.paths.ApiUrl.url + url, data)
+            .then(res => {
+                const items = res.status;
+                return items;
+            })
+            .catch(error => {
+                Materialize.toast(error.message, 3000, 'rounded red');
+                return error.message;
+            });
+        result.then(function(){
+            return result;
+        });
+        return result;
+    }
+
+    put(url, data, errCallback, successCallback) {
+        let result = axios.put(this.paths.ApiUrl.url + url, data)
+            .then(res => {
+                const items = res.status;
+                successCallback();
+                return items;
+            })
+            .catch(error => {
+                errCallback();
+                Materialize.toast(error.message, 3000, 'rounded red');
+                return error.message;
+            });
+        result.then(function(){
+            return result;
+        });
+        return result;
+    }
+
 }
