@@ -27,6 +27,8 @@ export default class ApiFactory {
         let result = axios.post(this.paths.ApiUrl.url + url, data)
             .then(res => {
                 const items = res.status;
+                if (callback !== null)
+                    callback();
                 return items;
             })
             .catch(error => {

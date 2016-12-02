@@ -1,6 +1,6 @@
 import React from 'react';
 import update from 'react-addons-update';
-import axios from 'axios';
+import Api from '../../APIFactory';
 
 export default class MenuItem extends React.Component{
     constructor(props) {
@@ -10,7 +10,7 @@ export default class MenuItem extends React.Component{
             roles: props.roles
         };
         this.itempropChange = this.itempropChange.bind(this);
-        // this.bindArrayChange = this.bindArrayChange.bind(this);
+        this.api = new Api();
         this.saveItem = this.saveItem.bind(this);
     }
 
@@ -22,13 +22,7 @@ export default class MenuItem extends React.Component{
 
     saveItem(){
         console.log(JSON.stringify(this.state.item))
-        axios.put('http://193.124.178.232:100/wbp/menu?id=' + this.state.item.id, this.state.item)
-            .then(function (response) {
-                Materialize.toast('Ok!', 3000, 'rounded green')
-            })
-            .catch(function (error) {
-                Materialize.toast(error.response.data.message, 3000, 'rounded red');
-            });
+        this.api.put('/menu?id=' + this.state.item.id, this.state.item, null, null)
     }
 
     //Menu item changing event

@@ -1,4 +1,5 @@
 import React from 'react';
+import PersonalCalendar from 'personalCalendar';
 
 
 export default class DashBoard extends React.Component {
@@ -7,17 +8,13 @@ export default class DashBoard extends React.Component {
     }
 
     componentDidMount() {
-        $('#fullcalendar').fullCalendar({
-            weekends: false,
-            locale: 'ru'// will hide Saturdays and Sundays
-        });
         $('.button-collapse').sideNav('hide');
     }
 
     render() {
         return (
             <div id="fullcalendar">
-
+                <PersonalCalendar />
             </div>
         )
     }

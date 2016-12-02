@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import Api from '../../APIFactory';
 import update from 'react-addons-update';
 
 export default class UserPic extends React.Component{
@@ -10,6 +10,7 @@ export default class UserPic extends React.Component{
         };
         this.changeUserPic = this.changeUserPic.bind(this);
         this.changeIconClick = this.changeIconClick.bind(this);
+        this.api = new Api();
     }
 
     componentWillReceiveProps(nextProps){
@@ -21,21 +22,29 @@ export default class UserPic extends React.Component{
         $('#uploader').addClass('active');
         let fd = new FormData;
         fd.append('ava', event.currentTarget.files[0]);
-        axios.post('http://193.124.178.232:100/wbp/ava', fd)
-            .then((response) => {
-                Materialize.toast('Ok!', 3000, 'rounded green');
-                axios.get('http://193.124.178.232:100/wbp/ava')
-                    .then((r) => {
-                        this.setState({
-                            curentPic: update(this.state.curentPic, {val: {$set: r.data}})
-                        });
-                        $('#uploader').removeClass('active');
-                    })
-            })
-            .catch(function (error) {
+        this.api.post('/ava', fd, () => {
+            this.api.get('/ava',null).then((r) => {
+                this.setState({
+                    curentPic: update(this.state.curentPic, {val: {$set: r.data}})
+                });
                 $('#uploader').removeClass('active');
-                Materialize.toast(error, 3000, 'rounded red');
-            });
+            })
+        })
+        // axios.post('http://193.124.178.232:100/wbp/ava', fd)
+        //     .then((response) => {
+        //         Materialize.toast('Ok!', 3000, 'rounded green');
+        //         axios.get('http://193.124.178.232:100/wbp/ava')
+        //             .then((r) => {
+        //                 this.setState({
+        //                     curentPic: update(this.state.curentPic, {val: {$set: r.data}})
+        //                 });
+        //                 $('#uploader').removeClass('active');
+        //             })
+        //     })
+        //     .catch(function (error) {
+        //         $('#uploader').removeClass('active');
+        //         Materialize.toast(error, 3000, 'rounded red');
+        //     });
     }
 
     changeIconClick(event) {

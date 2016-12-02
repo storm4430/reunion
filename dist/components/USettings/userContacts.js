@@ -36,7 +36,6 @@ export default class UserContacts extends React.Component{
         let s = ( event.currentTarget.dataset.tip === 'mail')
             ? $.grep(this.state.mail, (e) => { return e.id == t })
             : $.grep(this.state.tel, (e) => { return e.id == t });
-        console.log('object is ',s)
         ReactDOM.render(
             <ModalConfirmation contact={ s[0] } tip={ event.currentTarget.dataset.tip }/>,
             document.getElementById('modalWindow')

@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import Api from '../../APIFactory';
 import update from 'react-addons-update';
 
 export default class UserBackground extends React.Component{
@@ -10,6 +10,7 @@ export default class UserBackground extends React.Component{
         };
         this.changeUserPic = this.changeUserPic.bind(this);
         this.changeBackGroundClick = this.changeBackGroundClick.bind(this);
+        this.api = new Api();
     }
 
     componentWillReceiveProps(nextProps){
@@ -21,21 +22,29 @@ export default class UserBackground extends React.Component{
         $('#ubloader').addClass('active');
         let fd = new FormData;
         fd.append('usrbg', event.currentTarget.files[0]);
-        axios.post('http://193.124.178.232:100/wbp/usrbg', fd)
-            .then((response) => {
-                Materialize.toast('Ok!', 3000, 'rounded green');
-                axios.get('http://193.124.178.232:100/wbp/usrbg')
-                    .then((r) => {
-                        this.setState({
-                            curentPic: update(this.state.curentPic, {val: {$set: r.data}})
-                        });
-                        $('#ubloader').removeClass('active');
-                    })
-            })
-            .catch(function (error) {
+        this.api.post('/usrbg', fd, ()=>{
+            this.api.get('/usrbg').then((r) => {
+                this.setState({
+                    curentPic: update(this.state.curentPic, {val: {$set: r.data}})
+                });
                 $('#ubloader').removeClass('active');
-                Materialize.toast(error, 3000, 'rounded red');
-            });
+            })
+        })
+        // axios.post('http://193.124.178.232:100/wbp/usrbg', fd)
+        //     .then((response) => {
+        //         Materialize.toast('Ok!', 3000, 'rounded green');
+        //         axios.get('http://193.124.178.232:100/wbp/usrbg')
+        //             .then((r) => {
+        //                 this.setState({
+        //                     curentPic: update(this.state.curentPic, {val: {$set: r.data}})
+        //                 });
+        //                 $('#ubloader').removeClass('active');
+        //             })
+        //     })
+        //     .catch(function (error) {
+        //         $('#ubloader').removeClass('active');
+        //         Materialize.toast(error, 3000, 'rounded red');
+        //     });
     }
     changeBackGroundClick(event) {
         event.preventDefault();

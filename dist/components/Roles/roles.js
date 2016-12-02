@@ -1,6 +1,5 @@
 import React from 'react';
 import update from 'react-addons-update';
-import axios from 'axios';
 
 export default class Roles extends React.Component{
     constructor() {
