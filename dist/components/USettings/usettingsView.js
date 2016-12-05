@@ -40,9 +40,7 @@ export default class UserSettings extends React.Component {
                 <UserPic image={ this.state.usettings.img } />
                 <PersData fio={ this.state.usettings.fio } orgs={ this.state.usettings.orgs } position={ this.state.usettings.position } />
                 <UserContacts data={ this.state.usettings } />
-                <div className="modal" id="modalWindow">
 
-                </div>
             </div>
         )
     }

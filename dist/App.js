@@ -15,6 +15,7 @@ ReactDOM.render(
             <Route path="/menuedit" component={MenuEdit}/>
             <Route path="/usersettings" component={UserSettings}/>
         </Route>
+
     </Router>,
     document.getElementById('container')
 );

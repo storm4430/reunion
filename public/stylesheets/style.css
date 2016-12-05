@@ -90,3 +90,15 @@ strong{
 .hWithoutamargin {
     margin: 0 !important;
 }
+
+.td1of7 {
+    width:13.5%;
+}
+
+.smaller {
+    font-size: 20px !important;
+}
+
+.noMarginBottom {
+    margin-bottom: 0 !important;
+}

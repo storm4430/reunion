@@ -116,6 +116,9 @@ export default class Menu extends React.Component {
                 <div className="content">
                     {this.props.children}
                 </div>
+                <div className="modal" id="modalWindow">
+
+                </div>
             </div>
         );
     }
